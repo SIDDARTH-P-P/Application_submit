@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Application Submit</title>
+</head>
+<body>
+    <h1 class="pt-5 pb-5">Application Submit</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 border border-success p-0 mb-2 border-opacity-75 ">
+                <div  class="img pt-3">
+                    <img alt="" id="image">
+                </div>
+                <form onsubmit="send_data(event)" class="pt-5">
+                    <label class="form-control" for="input_file" class="btn">select image</label>
+                    <input class="form-control"  type="file" name="profile" id="input_file" onchange="change()">
+                    <input class="form-control" type="text" name="username" placeholder="Name">
+                    <input class="form-control" type="email" name="email" placeholder="Email">
+                    <input class="form-control" type="text" name="phone" placeholder="Phone">
+                    <input class="form-control" type="text" name="qualification" placeholder="Qualification">
+                    <input class="form-control" type="file" name="resume" id="resume">
+                    <label class="form-control" for="resume" class="btn">select Resume</label>
+                    <input class="form-control bg-primary" type="submit"  value="Uplode">
+                </form>
+            </div>
+
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+    <div class="img pt-5">
+        <button class="btn btn-info" onclick="get_userdata()">Application Details</button>
+    </div>
+    <script>
+        function get_userdata(){
+            location.href = `http://localhost:3000/users.html`
+        }
+
+        let image = document.getElementById("image")
+        let change = ()=>{
+            image.src = URL.createObjectURL(input_file.files[0]);
+        }
+
+
+
+        async function send_data(event){
+            event.preventDefault();
+            let formdata = new FormData(event.target);
+            let profile = formdata.get("profile")
+            let file = await convert(profile);
+            formdata.set('profile',file);
+            fetch(`http://localhost:3000/api`,{
+                method:"post",
+                body:formdata
+            })
+            .then(res => {
+                if(res.status == 200){
+                    location.href = "http://localhost:3000"
+                }
+            })
+        }
+
+
+
+        function convert(file){
+            return new Promise((res,rej)=>{
+                let reder = new FileReader()
+                reder.readAsDataURL(file)
+                reder.onload = ()=>{
+                    res(reder.result)
+                }
+                reder.onerror=(error)=>{
+                    res(error)
+                }
+            })
+        }
+    </script>
+</body>
+</html>

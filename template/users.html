@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Applications</title>
+</head>
+<body>
+    <h1 class="pt-5">Applications</h1>
+    <div class="img">
+        <ol id="list"></ol>
+    </div>
+
+
+    <script>
+        let list = document.getElementById("list")
+        function generate_link(){
+            fetch(`http://localhost:3000/api`)
+            .then(res => res.json())
+            .then(data => {
+                list.innerHTML = null;
+                data.forEach((item)=>{
+                    li = `<li><a href="http://localhost:3000/user/${item._id}">${item.username}</a></li>`;
+                    list.innerHTML += li;
+                })
+            })
+        }
+        function print(){
+            fetch(`http://localhost:3000/user`)
+        }
+        generate_link();
+    </script>
+</body>
+</html>
