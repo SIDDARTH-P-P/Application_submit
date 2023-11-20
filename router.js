@@ -16,10 +16,9 @@ const uploder = multer({storage:storage})
 
 
 router.route("/api").post(uploder.single("resume"),fun.data);
-
 router.route("/api").get(fun.get_data);
 
-router.route("/get_file/:num").get(fun.get_file);
+router.route("/user/:id").get(fun.one);
 
-router.route("/user/:num").get(fun.one);
+router.route("/get_file/:file").get(fun.get_file);
 export default router;

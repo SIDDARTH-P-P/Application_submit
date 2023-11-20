@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="pb-3 pt-4" id="name"></h1>
+    <h3 class="img" id="email"></h3>
+    <h4  class="img" id="phone"></h4>
+    <h4  class="img" id="qualification"></h4>
+    <div class="img">
+        <img class="user_img" id="img" alt="">
+    </div>
+    <a class="img" id="re">View Resume</a>
+    <script>
+        // console.log(location.href.split("?id=")[1]);
+        let id = location.href.split("?id=")[1];
+        fetch(`http://localhost:3000/user/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("name").innerText = `Details of : ${data.username}`
+            document.getElementById("email").innerText = `Email : ${data.email}`
+            document.getElementById("phone").innerText = `Phone : ${data.phone}`
+            document.getElementById("qualification").innerText = `Qualification : ${data.qualification}`
+            document.getElementById("img").src = data.profile
+            document.getElementById("re").href = `http://localhost:3000/get_file/${data.resume.filename}`
+        })
+    </script>
+</body>
+</html>

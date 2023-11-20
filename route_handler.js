@@ -22,23 +22,13 @@ export async function get_data(req,res){
 
 
 export async function one(req,res){
-    let {num} = req.params;
-    let result = await schema.findOne({_id:num})
-    res.send(`
-    <h1 style="display: flex;justify-content: center;">Details of : ${result.username}</h1>
-    <h3 style="display: flex;justify-content: center;" >Email : ${result.email}</h3>
-    <h3 style="display: flex;justify-content: center;" >Phone : ${result.phone}</h3>
-    <h3 style="display: flex;justify-content: center;" >Qualification : ${result.qualification}</h3>
-    <div style="display: flex;justify-content: center;" >
-    <img style="height: 200px;width: 200px;"  src="${result.profile}" alt="">
-    </div>
-    <a style="display: flex;justify-content: center;" href="http://localhost:3000/get_file/${result.resume.filename}">Resume</a>
-
-    `)
+    let {id} = req.params;
+    let result = await schema.findOne({_id:id})
+    return res.json(result);
 }
 
 
 export async function get_file(req,res){
-    let {num} = req.params
-    return res.sendFile(path.resolve(`./resume/${num}`))
+    let {file} = req.params
+    return res.sendFile(path.resolve(`./resume/${file}`))
 }

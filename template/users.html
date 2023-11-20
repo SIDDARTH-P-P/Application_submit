@@ -21,13 +21,10 @@
             .then(data => {
                 list.innerHTML = null;
                 data.forEach((item)=>{
-                    li = `<li><a href="http://localhost:3000/user/${item._id}">${item.username}</a></li>`;
+                    li = `<li><a href="http://localhost:3000/user.html?id=${item._id}">${item.username}</a></li>`;
                     list.innerHTML += li;
                 })
             })
-        }
-        function print(){
-            fetch(`http://localhost:3000/user`)
         }
         generate_link();
     </script>
